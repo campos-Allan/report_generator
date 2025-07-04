@@ -1,6 +1,6 @@
 # 📊 Excel Auto-Refresh & PDF Export Automation
 
-This project automates the opening of multiple Excel workbooks (with heavy Power Query or SharePoint queries), waits until all queries have finished updating, exports specific worksheets to PDF, and closes the files cleanly — with no manual intervention required.
+This project automates the opening of multiple Excel workbooks (with heavy Power Query queries), waits until all queries have finished updating, exports specific worksheets to PDF, and closes the files cleanly — with no manual intervention required.
 
 ## 🚀 Objective
 
@@ -19,10 +19,8 @@ Eliminate the need to manually open, monitor, and close Excel files connected to
 ## 📁 Project Structure
 
 ```
-├── main.py          # Main automation script
-├── arq              # Dictionary of Excel file paths and worksheet indexes to export
-├── output/          # Folder where PDFs will be saved (can be customized)
-└── README.md        # This file
+├── report_generator.py          # Main automation script
+└── README.md                    # This file
 ```
 
 ## 🧰 Requirements
@@ -30,7 +28,6 @@ Eliminate the need to manually open, monitor, and close Excel files connected to
 - **Python 3.8+**
 - **Windows OS** (due to Excel COM interface and user input simulation)
 - **Excel** installed locally
-- **SharePoint** mapped as a network folder or synced with OneDrive
 
 ### Python Packages
 
@@ -57,7 +54,7 @@ Instead, we use a more robust method: **monitoring the CPU usage of the EXCEL.EX
 1. Edit the `arq` dictionary with your Excel file paths and worksheet indexes
 2. Run the script with Python:
    ```bash
-   python main.py
+   python report_generator.py
    ```
 
 The script will:
@@ -71,7 +68,7 @@ PDFs will be saved to a specified output directory with timestamped filenames.
 ## ⚠️ Notes
 
 - No VBA or macro code is required
-- Files must be locally accessible (mapped SharePoint paths or synced locations)
+- Files must be locally accessible 
 - Ensure Excel is installed and functional on the machine
 
 ## 📈 Benefits
