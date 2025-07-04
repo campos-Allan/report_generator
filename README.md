@@ -1,6 +1,6 @@
 # 📊 Excel Auto-Refresh & PDF Export Automation
 
-This project automates the opening of multiple Excel workbooks (with heavy Power Query queries), waits until all queries have finished updating, exports specific worksheets to PDF, and closes the files cleanly — with no manual intervention required.
+This project automates the opening of multiple Excel workbooks (with heavy queries that auto refresh when the file is opened), waits until all queries have finished updating, exports specific worksheets to PDF, and closes the files cleanly — with no manual intervention required.
 
 ## 🚀 Objective
 
