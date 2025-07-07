@@ -1,4 +1,5 @@
 import os
+import subprocess
 from datetime import datetime
 import time
 import ctypes
@@ -97,13 +98,15 @@ workbooks.clear()
 excel.Quit()
 del excel
 time.sleep(5)
+TODAY = datetime.now().strftime('%Y_%m_%d')
+TODAY_FOLDER = f'exported pdf folder path\\{TODAY}'
 for file, index in arq.items():
     WB_PATH = file
     ws_index_list = index
     nome = file.split('/')[-1][:-5]
-    DIR_END = f'report location\\{nome}'
-    DATE = f'_{YEAR}_{MONTH}_{DAY}'
-    PATH_TO_PDF = DIR_END+DATE+'.pdf'
+    DIR_END = f'{TODAY_FOLDER}\\{nome}'
+    FDATE = f'_{YEAR}_{MONTH}_{DAY}'
+    PATH_TO_PDF = DIR_END+FDATE+'.pdf'
     excel = win32com.client.Dispatch("Excel.Application")
     try:
         excel.Visible = False
@@ -126,3 +129,5 @@ for file, index in arq.items():
             print(e)
             os.system("taskkill /f /im excel.exe")
             time.sleep(3)
+graphic_path = 'path to other script\\escuros.py'
+subprocess.run(['python', graphic_path], check=True)
