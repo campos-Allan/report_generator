@@ -40,6 +40,8 @@ def wait_excel_stop_updates():
             ctypes.windll.user32.mouse_event(0x0001, 0, 1, 0, 0)
             ctypes.windll.user32.mouse_event(0x0001, 0, -1, 0, 0)
             last_move = time.time()
+        if time.time() - last_move > 1200: #20 minutes timeout - it would normally update in 10-12 minutes
+            inactive_counter = 5
         time.sleep(5)
     print("✅ Excel finished updating.")
 
@@ -103,31 +105,36 @@ TODAY_FOLDER = f'exported pdf folder path\\{TODAY}'
 for file, index in arq.items():
     WB_PATH = file
     ws_index_list = index
-    nome = file.split('/')[-1][:-5]
-    DIR_END = f'{TODAY_FOLDER}\\{nome}'
+    NAME = file.split('/')[-1][:-5]
+    DIR_END = f'{TODAY_FOLDER}\\{NAME}'
     FDATE = f'_{YEAR}_{MONTH}_{DAY}'
     PATH_TO_PDF = DIR_END+FDATE+'.pdf'
     excel = win32com.client.Dispatch("Excel.Application")
-    try:
-        excel.Visible = False
-        print(f"📄 Exporting {nome}...")
-        wb = excel.Workbooks.Open(WB_PATH)
-        wb.Worksheets(ws_index_list).Select()
-        wb.ActiveSheet.ExportAsFixedFormat(0, PATH_TO_PDF)
-        time.sleep(5)
-    except Exception as e:
-        print(f"❌ Fail to export {nome}: {e}")
-        time.sleep(3)
-    else:
-        print('Success.')
-    finally:
+    ATTEMPT = 1
+    SUCCESS = False
+    while ATTEMPT<=3 and not SUCCESS:
         try:
-            wb.Close(False)
-            time.sleep(3)
+            excel.Visible = False
+            print(f"📄 Exporting {NAME}...")
+            wb = excel.Workbooks.Open(WB_PATH)
+            wb.Worksheets(ws_index_list).Select()
+            wb.ActiveSheet.ExportAsFixedFormat(0, PATH_TO_PDF)
+            time.sleep(5)
+            SUCCESS = True
+            print('Success.')
         except Exception as e:
-            print('Fail.')
-            print(e)
-            os.system("taskkill /f /im excel.exe")
+            print(f"❌ Fail to export {NAME}: {e} (Attempt {ATTEMPT})")
             time.sleep(3)
+            ATTEMPT+=1
+    if not SUCCESS:
+        print(f"⚠️ Couldn't export {NAME} after 3 tries.")
+    try:
+        wb.Close(False)
+        time.sleep(3)
+    except Exception as e:
+        print('Fail.')
+        print(e)
+        os.system("taskkill /f /im excel.exe")
+        time.sleep(3)
 graphic_path = 'path to other script\\graphic.py'
 subprocess.run(['python', graphic_path], check=True)
