@@ -129,5 +129,5 @@ for file, index in arq.items():
             print(e)
             os.system("taskkill /f /im excel.exe")
             time.sleep(3)
-graphic_path = 'path to other script\\escuros.py'
+graphic_path = 'path to other script\\graphic.py'
 subprocess.run(['python', graphic_path], check=True)
