@@ -27,6 +27,7 @@ def wait_excel_stop_updates():
     """
     print("⏳ Waiting for Excel...")
     inactive_counter = 0
+    start= time.time()
     last_move = time.time()
     while inactive_counter < 5:
         if active_excel():
@@ -40,7 +41,7 @@ def wait_excel_stop_updates():
             ctypes.windll.user32.mouse_event(0x0001, 0, 1, 0, 0)
             ctypes.windll.user32.mouse_event(0x0001, 0, -1, 0, 0)
             last_move = time.time()
-        if time.time() - last_move > 1200: #20 minutes timeout - it would normally update in 10-12 minutes
+        if time.time() - start > 1200: #20 minutes timeout - it would normally update in 10-12 minutes
             inactive_counter = 5
         time.sleep(5)
     print("✅ Excel finished updating.")
