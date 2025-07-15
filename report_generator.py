@@ -52,14 +52,14 @@ YEAR = datetime.now().year
 MONTH = datetime.now().strftime('%m')
 
 arq = {  # 'file location':['Spreadsheet pages to export'],
-    'file location': [2, 3, 4, 5, 6, 7],
-    'file location': [1, 2],
-    'tLocal do arquivo': [1],
-    'file location': [1],
-    'file location': [1],
-    'file location': [1, 2, 3],
-    'file location': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    'file location': [1, 2, 3, 4]
+    'file location\\file1.xlsx': [2, 3, 4, 5, 6, 7],
+    'file location\\file2.xlsx': [1, 2],
+    'file location\\file3.xlsx': [1],
+    'file location\\file4.xlsx': [1],
+    'file location\\file5.xlsx': [1],
+    'file location\\file6.xlsx': [1, 2, 3],
+    'file location\\file7.xlsx': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    'file location\\file8.xlsx': [1, 2, 3, 4]
 }
 
 os.system("taskkill /f /im excel.exe")
@@ -103,10 +103,11 @@ del excel
 time.sleep(5)
 TODAY = datetime.now().strftime('%Y_%m_%d')
 TODAY_FOLDER = f'exported pdf folder path\\{TODAY}'
+os.makedirs(TODAY_FOLDER, exist_ok=True)
 for file, index in arq.items():
     WB_PATH = file
     ws_index_list = index
-    NAME = file.split('/')[-1][:-5]
+    NAME = file.split('\\')[-1][:-5]
     DIR_END = f'{TODAY_FOLDER}\\{NAME}'
     FDATE = f'_{YEAR}_{MONTH}_{DAY}'
     PATH_TO_PDF = DIR_END+FDATE+'.pdf'
